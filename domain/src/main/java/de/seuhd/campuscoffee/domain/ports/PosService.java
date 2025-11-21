@@ -43,7 +43,14 @@ public interface PosService {
      */
     @NonNull Pos getById(@NonNull Long id) throws PosNotFoundException;
 
-    // TODO: Add a new getByName method to enable fetching POS by name.
+    /**
+     * Retrieves a POS by its unique name.
+     *
+     * @param name the POS name to filter by
+     * @return the matching POS
+     * @throws PosNotFoundException if no POS exists with the given name
+     */
+    @NonNull Pos filterByName(@NonNull String name) throws PosNotFoundException;
 
     /**
      * Creates a new POS or updates an existing one.

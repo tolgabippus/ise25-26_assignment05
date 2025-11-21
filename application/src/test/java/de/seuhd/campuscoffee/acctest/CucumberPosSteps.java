@@ -91,7 +91,11 @@ public class CucumberPosSteps {
         assertThat(retrievedPosList).isEmpty();
     }
 
-    // TODO: Add Given step for new scenario
+    @Given("the following POS exist")
+    public void theFollowingPosExist(List<PosDto> posList) {
+        createdPosList = createPos(posList);
+        assertThat(createdPosList).size().isEqualTo(posList.size());
+    }
 
     // When -----------------------------------------------------------------------
 
@@ -101,7 +105,19 @@ public class CucumberPosSteps {
         assertThat(createdPosList).size().isEqualTo(posList.size());
     }
 
-    // TODO: Add When step for new scenario
+    @When("I update the POS named {string} to have description {string}")
+    public void updatePosNamedToHaveDescription(String name, String newDescription) {
+        PosDto target = createdPosList.stream()
+                .filter(pos -> pos.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("POS with name " + name + " was not created"));
+
+        PosDto updatedRequest = target.toBuilder()
+                .description(newDescription)
+                .build();
+
+        updatedPos = updatePos(List.of(updatedRequest)).getFirst();
+    }
 
     // Then -----------------------------------------------------------------------
 
@@ -113,5 +129,9 @@ public class CucumberPosSteps {
                 .containsExactlyInAnyOrderElementsOf(createdPosList);
     }
 
-    // TODO: Add Then step for new scenario
+    @Then("the POS named {string} should have description {string}")
+    public void thePosNamedShouldHaveDescription(String name, String expectedDescription) {
+        PosDto retrieved = retrievePosByName(name);
+        assertThat(retrieved.description()).isEqualTo(expectedDescription);
+    }
 }

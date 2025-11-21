@@ -35,7 +35,7 @@ public interface PosDataService {
      * @return the POS entity with the specified name; never null
      * @throws PosNotFoundException if no POS exists with the given name
      */
-    @NonNull Pos getByName(@NonNull String name) throws PosNotFoundException;
+    @NonNull Pos filterByName(@NonNull String name) throws PosNotFoundException;
 
     /**
      * Retrieves a single POS entity by its unique identifier.

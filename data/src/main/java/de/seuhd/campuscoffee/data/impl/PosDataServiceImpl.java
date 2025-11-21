@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-class PosDataServiceImpl implements PosDataService {
+public class PosDataServiceImpl implements PosDataService {
     private final PosRepository posRepository;
     private final PosEntityMapper posEntityMapper;
 
@@ -40,7 +40,7 @@ class PosDataServiceImpl implements PosDataService {
     }
 
     @Override
-    public @NonNull Pos getByName(@NonNull String name) throws PosNotFoundException {
+    public @NonNull Pos filterByName(@NonNull String name) throws PosNotFoundException {
         return posRepository.findByName(name)
                 .map(posEntityMapper::fromEntity)
                 .orElseThrow(() -> new PosNotFoundException(name));
